@@ -1,20 +1,3 @@
-### Optimal Hyperparameters
+### Hyperparameters
 
-**Model Backbones:**
-* **CONAP-FM:** LLM
-* **TFCLPM:** SDL
-* **CNAPwP:** Transformer
-* **DynaTrainCDD:** SDL
-
-| Dataset | CONAP-FM <br> $\mathcal{W}$ | CONAP-FM <br> $\eta$ | CONAP-FM <br> $\tau$ | CONAP-FM <br> $r$ | CONAP-FM <br> $\alpha$ | TFCLPM <br> $\mathcal{W}$ | TFCLPM <br> $\|B_{hard}\|$ | TFCLPM <br> $\lambda$ | CNAPwP <br> $\mathcal{W}$ | CNAPwP <br> $\rho$ | CNAPwP <br> $\epsilon$ | DynaTrainCDD <br> $\mathcal{W}_{init}$ | DynaTrainCDD <br> $k$ | DynaTrainCDD <br> $\lambda$ |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **IRO5000** | 100 | 2e-3 | 5e-4 | 8 | 16 | 500 | 100 | 1.5 | 500 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **ORI5000** | 100 | 2e-4 | 5e-2 | 256 | 512 | 500 | 100 | 0.5 | 500 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **ROI5000** | 100 | 2e-3 | 5e-4 | 8 | 16 | 500 | 500 | 1.0 | 500 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **OIR5000** | 100 | 2e-4 | 5e-4 | 256 | 512 | 500 | 500 | 1.5 | 500 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **RIO5000** | 100 | 2e-3 | 5e-2 | 8 | 16 | 500 | 100 | 0.5 | 500 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **BPI15-REC** | 100 | 2e-4 | 5e-4 | 256 | 512 | 500 | 100 | 0.5 | 500 | 100 | 0.5 | 100 | 0.8 | 0.25 |
-| **BPI20-RFP** | 100 | 2e-4 | 5e-4 | 128 | 256 | 500 | 100 | 1.0 | 100 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **BPI20-ID** | 100 | 2e-4 | 5e-3 | 256 | 512 | 500 | 100 | 1.5 | 500 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **BPI20-DD** | 100 | 2e-4 | 5e-4 | 256 | 512 | 500 | 100 | 0.5 | 100 | 50 | 0.3 | 1000 | 0.8 | 0.25 |
-| **BPI17** | 100 | 2e-4 | 5e-3 | 256 | 512 | 1500 | 100 | 1.5 | 500 | 100 | 0.3 | 100 | 0.8 | 0.25 |
+![Optimal Hyperparameters](hyperparameters.png)
