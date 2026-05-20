@@ -56,3 +56,6 @@ python Methods/CONAP_FM/run.py --dataset Data/RequestForPayment.csv
 
 ## Macro F1-Scores 
 ![Macro F1-Score](macro_f1.png)
+
+## End-To-End Runtimes 
+![Runtimes](runtime.png)
