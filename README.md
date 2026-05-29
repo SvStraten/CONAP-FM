@@ -64,3 +64,15 @@ python Methods/CONAP_FM/run.py --dataset Data/RequestForPayment.csv
 
 ## End-To-End Runtime (in seconds) 
 ![Runtimes](Figures/runtime.png)
+
+## Full Stream Accuracies
+![BPI15-REC](Figures/BPI15-REC.png)
+![BPI20-DD](Figures/BPI20-DD.png)
+![BPI20-ID](Figures/BPI20-ID.png)
+![BPI20-RFP](Figures/BPI20-RFP.png)
+![IRO5000](Figures/IRO5000.png)
+![OIR5000](Figures/OIR5000.png)
+![ORI5000](Figures/ORI5000.png)
+![RIO5000](Figures/RIO5000.png)
+![ROI5000](Figures/ROI5000.png)
+![runtime](Figures/runtime.png)
