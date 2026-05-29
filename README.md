@@ -75,4 +75,3 @@ python Methods/CONAP_FM/run.py --dataset Data/RequestForPayment.csv
 ![ORI5000](Figures/ORI5000.png)
 ![RIO5000](Figures/RIO5000.png)
 ![ROI5000](Figures/ROI5000.png)
-![runtime](Figures/runtime.png)
