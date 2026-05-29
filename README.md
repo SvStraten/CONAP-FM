@@ -55,7 +55,7 @@ python Methods/CONAP_FM/run.py --dataset Data/RequestForPayment.csv
 * **Weibull Shape ($W_k$):** {0.6, 0.8, 1.0}
 * **Weibull Scale ($W_\lambda$):** {0.25, 0.50, 0.75} 
 
-![Optimal Hyperparameters](hyperparameters.png)
+![Optimal Hyperparameters](Figures/hyperparameters.png)
 
 
 ## Macro F1-Scores 
