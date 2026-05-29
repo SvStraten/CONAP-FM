@@ -14,6 +14,7 @@
 CONAP-FM/
 │
 ├── Data/                   # Raw event logs (.csv)
+├── Figures/                # Figures
 ├── Methods/                
 │   ├── CONAP_FM/           # Core streaming engine and LoRA handlers
 │   └── CONAP_FM_pretrained/# Offline pre-training logic
