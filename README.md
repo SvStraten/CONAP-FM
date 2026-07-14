@@ -62,7 +62,7 @@ python Methods/CONAP_FM/run.py --dataset Data/RequestForPayment.csv
 ## Macro F1-Scores 
 ![Macro F1-Score](Figures/macro_f1.png)
 
-## End-To-End Runtime (in seconds) 
+## End-To-End Runtime (training + inference, in seconds) 
 ![Runtimes](Figures/runtime.png)
 
 ## Full Stream Accuracies
