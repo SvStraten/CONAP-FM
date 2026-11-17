@@ -1,30 +1,15 @@
-"""Run all configurations x datasets x seeds. Finished runs are skipped, so it can be restarted.
-
-  python run_experiments.py --datasets IRO5000 RequestForPayment --configs full --seeds 40 41 42 43 44 45
-  python run_experiments.py --configs all_ablation --dry-run
-
-Pretraining pairs are given as DATASET=checkpoint_dir, for example
-  --pretrained RequestForPayment=checkpoints/PTC_seed40
-and are run as extra configurations with the suffix _pre.
-"""
 import argparse
 import os
 import subprocess
 import sys
 
 try:
-    from Setup.final import FINAL     # W, tau, epsilon and cooldown C per log, written by Analysis/select_grid.py
+    from Setup.final import FINAL    
 except ImportError:
     FINAL = {}
 from Setup.hparams import HPARAMS, EPOCHS, SHARED
 
 CONFIGS = {
-    # main method and the ablation of its components. The importance mask is NOT part of the final method.
-    #   full        trigger + memory + CaGA (the method)
-    #   forward     plain LoRA, no memory (sequential fine-tuning without consolidation)
-    #   neither     trigger and memory, but the memory is never used (no CaGA), so it equals forward
-    #   with_mask   the method plus the parameter importance mask
-    #   no_caga     the importance mask without CaGA (mask only)
     "full":            [],
     "forward":         ["--no-backward-transfer"],
     "neither":         ["--no-caga"],
@@ -32,8 +17,7 @@ CONFIGS = {
     "no_caga":         ["--paca", "--no-caga"],
     "mask_legacy":     ["--paca", "--paca-mode", "legacy"],
     "caga_affinity":   ["--caga-mode", "affinity"],
-    "order_old":       ["--paca", "--adapt-order", "paca_caga"],   # old order, mask before projection (diverges, kept to show why)
-    # who triggers consolidation
+    "order_old":       ["--paca", "--adapt-order", "paca_caga"],   
     "oracle":          ["--trigger", "oracle"],
     "fixed":           ["--trigger", "fixed"],
     "adwin":           ["--trigger", "adwin"],
@@ -41,10 +25,10 @@ CONFIGS = {
     # backbone versus drift awareness
     "full_ft":         ["--variant", "full_ft", "--lr", "2e-5"],
     "random_full":     ["--variant", "random_full"],
-    "random_full_lowlr": ["--variant", "random_full", "--lr", "2e-5"],   # same lr as full_ft, so the pretraining comparison is fair
+    "random_full_lowlr": ["--variant", "random_full", "--lr", "2e-5"],   
     "random_lora":     ["--variant", "random_lora"],
 }
-# Every configuration uses the same budget per window, EPOCHS in Setup/hparams.py (10).
+
 GROUPS = {
     "all_ablation": ["full", "forward", "neither", "with_mask", "no_caga"],
     "triggers": ["full", "oracle", "fixed", "adwin", "page_hinkley"],
@@ -90,7 +74,7 @@ def main():
                            "--loss-variance-threshold", str(tu["tau"]), "--epsilon", str(tu["epsilon"]), "--svd-cooldown-windows", str(tu["cooldown"]),
                            "--epochs-per-window", str(EPOCHS), "--lora-r", str(hp["r"]),
                            "--lora-alpha", str(hp["alpha"]), "--plots-dir", args.out, "--quiet"]
-                    cmd += CONFIGS[cfg] + extra + args.extra   # config flags may override --lr
+                    cmd += CONFIGS[cfg] + extra + args.extra  
                     print(" ".join(cmd))
                     if not args.dry_run:
                         subprocess.run(cmd, check=False)
