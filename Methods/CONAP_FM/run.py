@@ -1,25 +1,3 @@
-"""Run CONAP-FM (or one of its ablation variants) on one log and one seed.
-
-Examples
-  python -m Methods.CONAP_FM.run --dataset Data/DomesticDeclarations.csv --data-split evaluation
-  python -m Methods.CONAP_FM.run --dataset Data/DomesticDeclarations.csv --paca --tag with_mask       (adds the importance mask, off by default)
-  python -m Methods.CONAP_FM.run --dataset Data/DomesticDeclarations.csv --model-name distilbert/distilgpt2 --plots-dir runs/distilgpt2
-  python -m Methods.CONAP_FM.run --dataset Data/DomesticDeclarations.csv --variant random_full --tag random_full
-  python -m Methods.CONAP_FM.run --dataset Data/DomesticDeclarations.csv \
-      --pretrained-lora-path checkpoints/RequestForPayment_from_PrepaidTravelCost/offline_lora.pt --pretrained-subspace-path checkpoints/RequestForPayment_from_PrepaidTravelCost/offline_subspace.pt
-
-Model variants (--variant)
-  lora         pretrained backbone (Tiny-LLM by default, or distilbert/distilgpt2), frozen, LoRA adapters trained online (CONAP-FM)
-  full_ft      pretrained backbone, all weights trained online, no LoRA
-  random_full  same architecture with random initial weights, all weights trained online
-  random_lora  same architecture with random frozen weights, LoRA adapters trained online
-
-Input to the model. Each prefix of a case is a vector of integer activity ids (most recent event
-first, zero padded up to L_max = longest case in the log). The ids index the frozen token embedding
-table of the backbone. The hidden state of the last position goes through a new linear head that is
-trained online from scratch. Pretraining transfers only the LoRA weights and the memory subspace,
-not the head, because the activity sets of two logs differ.
-"""
 import argparse
 import csv
 import json
@@ -45,7 +23,6 @@ from Utils.stream import apply_split, infer_n_classes, set_seed, truncate
 
 ATTN = ["q_proj", "k_proj", "v_proj", "o_proj"]
 MLP = ["gate_proj", "up_proj", "down_proj"]
-# GPT-2 family (distilgpt2). Its attention and MLP projections are Conv1D layers, so LoRA needs fan_in_fan_out=True.
 GPT2_ATTN = r".*attn\.(c_attn|c_proj)"
 GPT2_ALL = ["c_attn", "c_proj", "c_fc"]
 HIDDEN = {"arnir0/Tiny-LLM": 192, "HuggingFaceTB/SmolLM2-135M": 576,

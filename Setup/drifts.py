@@ -1,6 +1,3 @@
-"""Ground truth drift points of the logs where they are known, as indices in the coordinates of the evaluated stream
-(the 85% evaluation split after filtering). They are only used by the oracle trigger of the ablation and by the
-drift recovery analysis (Analysis/analyze.py). Logs without an entry have no known drift."""
 DRIFT_EVAL = {
     "IRO5000": [2456, 7664, 13164, 18308, 23869, 29031, 34656, 39838, 45354],
     "ORI5000": [2325, 7526, 13276, 18426, 24280, 29448, 35083, 40271, 45941],

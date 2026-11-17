@@ -1,24 +1,3 @@
-"""Memory subspace, parameter importance mask (PACA) and gradient adaptation (CaGA).
-
-Changes with respect to the first release
------------------------------------------
-* The secondary SVD that merges old and new subspaces is truncated by singular
-  value. Before, every trigger added k columns, so the memory could grow until it
-  spanned the whole space and the projected gradient became zero.
-* The importance mask has two modes.
-    legacy  1 + softmax(|g * theta|). Mean is about 1 + 1/n, so it is almost a no-op.
-    scaled  n * softmax(standardised |g * theta|). Mean is exactly 1 and the spread
-            is large enough to matter. This is the default.
-* CaGA has two modes.
-    orthogonal  subtract the projection whenever rho > epsilon (the released behaviour).
-    affinity    subtract only if rho > epsilon AND the cosine between the projected
-                gradient and the stored mean gradient of consolidated tasks is negative.
-* The memory dimension is capped at `max_memory_fraction` of the matrix input dimension
-  (default 0.5), keeping the directions with the largest singular values.
-* epsilon is a constructor argument (it was hard-coded to 0.05).
-* Optional statistics (mask spread, number of CaGA corrections, memory dimension)
-  for the paper and for debugging.
-"""
 import os
 from collections import defaultdict
 

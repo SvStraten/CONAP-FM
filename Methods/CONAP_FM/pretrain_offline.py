@@ -1,14 +1,3 @@
-"""Offline pretraining of the LoRA adapters on one log, followed by subspace extraction.
-
-What is trained   LoRA adapters and the new linear head (backbone frozen).
-What is saved     LoRA adapter weights and the memory subspace. The head is NOT reused online,
-                  because the activity set of the target log differs. It is saved for reference.
-Data              the whole pretraining log (all cases), shuffled, mean cross entropy, Adam.
-
-Example
-  python -m Methods.CONAP_FM.pretrain_offline --dataset Data/PrepaidTravelCost.csv \
-      --output-dir checkpoints/PTC_seed40 --epochs 10 --seed 40
-"""
 import argparse
 import os
 import sys

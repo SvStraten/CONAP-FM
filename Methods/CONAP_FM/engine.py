@@ -1,27 +1,3 @@
-"""Online test-then-train engine for CONAP-FM.
-
-Protocol per window w_t
-  1. test    predict all events of the window with the current model (timed)
-  2. train   `gradient_steps` Adam steps on the window, gradient = CaGA(mask * grad) (timed)
-  3. trigger decide whether to consolidate the memory subspace (see `trigger_mode`)
-
-Trigger modes
-  variance       loss queue variance below tau, then cooldown (the method in the paper)
-  oracle         ground-truth drift points. Consolidates after the last window BEFORE a drift.
-  fixed          every `fixed_interval` windows
-  adwin          ADWIN on the training loss (needs the `river` package)
-  page_hinkley   Page-Hinkley test on the training loss
-For adwin and page_hinkley the detector fires after the loss has increased, so the subspace is
-extracted from the previous window, which still holds mostly pre-drift data.
-
-Changes with respect to the first release
-  * oracle consolidation moved to the window before the drift (it used the drifted window)
-  * subspace extraction runs in eval mode (no LoRA dropout noise)
-  * more triggers (fixed, adwin, page_hinkley) for the drift detector comparison
-  * timing of prediction and update per window, single-event latency probe, peak memory,
-    trainable parameter count, trigger window indices and handler statistics in the results
-  * the unused hard buffer and plotting code were removed
-"""
 import collections
 import resource
 import time
@@ -35,8 +11,6 @@ from torch.optim import Adam
 
 
 class PageHinkley:
-    """Detects an increase of the mean of a stream (here the training loss)."""
-
     def __init__(self, delta=0.005, threshold=0.5, alpha=0.9999, min_instances=5):
         self.delta, self.threshold, self.alpha, self.min_instances = delta, threshold, alpha, min_instances
         self.reset()
@@ -111,7 +85,6 @@ class OnlineCaLoraEngine:
         self.optimizer = Adam(params, lr=learning_rate)
         self.criterion = nn.CrossEntropyLoss(reduction="sum")
 
-        # plateau detection (N = loss_window_length, tau = threshold, C = cooldown)
         self.loss_queue = collections.deque(maxlen=loss_window_length)
         self.loss_queue_len = loss_window_length
         self.tau = loss_variance_threshold
@@ -157,7 +130,7 @@ class OnlineCaLoraEngine:
             batch_size=self.batch_size, shuffle=False)
 
         was_training = self.model.training
-        self.model.eval()                       # deterministic gradients (no LoRA dropout)
+        self.model.eval()                      
         self.model.zero_grad()
         acc = {}
         for b, (bx, by) in enumerate(loader):
@@ -171,7 +144,7 @@ class OnlineCaLoraEngine:
         for name, g in acc.items():
             try:
                 self.handler.update_memory(name, g)
-            except Exception as e:  # SVD can fail on degenerate gradients
+            except Exception as e:  
                 print(f"[Memory] update failed for {name}: {e}")
         self.model.train(was_training)
 
