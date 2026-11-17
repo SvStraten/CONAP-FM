@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+Preprocessed
+hf_cache/
+runs/
+OutputLogs/
+checkpoints/
+converted_ints.csv
