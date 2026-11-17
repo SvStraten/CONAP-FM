@@ -9,10 +9,11 @@ def save_granular_accuracy(
     seed, 
     true_labels, 
     pred_labels, 
-    output_file="OutputLogs/granular_accuracy.csv", 
+    output_file=None,
     bin_size=500
 ):
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    output_file = output_file or os.environ.get("GRANULAR_OUT", "OutputLogs/granular_accuracy.csv")   # GRANULAR_OUT redirects the file
+    os.makedirs(os.path.dirname(output_file) or ".", exist_ok=True)
     
     file_exists = os.path.isfile(output_file)
     with open(output_file, mode='a', newline='') as f:

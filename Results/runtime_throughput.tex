@@ -1,0 +1,25 @@
+\begin{table*}[t]
+\centering
+\caption{Processing speed in events per second (mean $\pm$ standard deviation over the seeds), obtained by dividing the number of events in the evaluation stream by the end-to-end runtime. \textbf{Bold} denotes the highest throughput per dataset. CONAP-FM is shown with the TinyLLM and the DistilGPT2 backbone.}
+\vspace{-0.8em}
+\label{tab:runtime_throughput}
+\footnotesize
+\setlength{\tabcolsep}{1.3pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccccccc}
+\toprule
+ & \multicolumn{6}{c}{\textit{Synthetic}} & \multicolumn{4}{c}{\textit{Real-world}} \\
+\cmidrule(lr){2-7} \cmidrule(lr){8-11}
+Method & IRO5000 & ORI5000 & ROI5000 & OIR5000 & RIO5000 & BPI15-REC & BPI20-RFP & BPI20-ID & BPI20-DD & BPI17 \\
+\midrule
+DoNothing~\cite{rizzi2022update} & \res{2042}{201} & \res{1876}{183} & \res{2038}{277} & \res{2005}{155} & \res{2077}{231} & \res{1419}{83.4} & \res{2172}{261} & \res{2205}{177} & \res{1761}{79.0} & \res{1246}{99.9} \\
+LastDrift~\cite{EDBN} & \res{756}{77.1} & \res{721}{68.0} & \res{716}{103} & \res{647}{45.9} & \res{728}{79.8} & \res{402}{18.8} & \res{88.7}{10.1} & \res{87.2}{7.9} & \res{74.3}{5.1} & \res{39.1}{2.7} \\
+DynaTrainCDD~\cite{DynaTrainCDD} & \res{\textbf{3681}}{195} & \res{\textbf{3529}}{155} & \res{\textbf{3688}}{313} & \res{\textbf{3681}}{210} & \res{\textbf{3763}}{281} & \res{2648}{205} & \res{\textbf{3448}}{234} & \res{\textbf{3803}}{194} & \res{\textbf{3495}}{254} & \res{2184}{148} \\
+TFCLPM~\cite{TFCLPM} & \res{3445}{211} & \res{3186}{304} & \res{2811}{249} & \res{2759}{163} & \res{3390}{250} & \res{\textbf{3159}}{342} & \res{2995}{261} & \res{3481}{204} & \res{3382}{308} & \res{\textbf{4240}}{291} \\
+CNAPwP~\cite{CNAPwP} & \res{697}{51.2} & \res{620}{76.3} & \res{676}{73.9} & \res{646}{63.6} & \res{671}{66.0} & \res{543}{46.3} & \res{489}{52.6} & \res{655}{59.2} & \res{527}{58.4} & \res{405}{28.2} \\
+\midrule
+\textbf{\textit{CONAP-FM}}{\tiny~TinyLLM} & \res{399}{32.9} & \res{361}{35.9} & \res{400}{21.4} & \res{384}{24.5} & \res{395}{32.3} & \res{361}{18.1} & \res{383}{31.9} & \res{367}{26.8} & \res{379}{36.7} & \res{249}{10.5} \\
+\textbf{\textit{CONAP-FM}}{\tiny~DistilGPT2} & \res{86.8}{5.1} & \res{62.0}{2.8} & \res{101}{5.7} & \res{72.9}{4.8} & \res{101}{3.9} & \res{26.1}{1.6} & \res{91.0}{9.2} & \res{67.2}{3.5} & \res{78.4}{2.8} & \res{13.7}{3.3} \\
+\bottomrule
+\end{tabular*}
+\end{table*}
