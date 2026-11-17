@@ -1,17 +1,3 @@
-"""Grid search of three CONAP-FM parameters on the 15% validation split of every log.
-
-  python grid_search.py --datasets IRO5000 --seeds 40 41 42
-  python grid_search.py --dry-run | wc -l
-
-Parameters and values (36 combinations per log and seed)
-  window   window size W in events                    50    100   500   1000
-  tau      variance threshold of the plateau trigger   5e-4  5e-3  5e-2
-  cooldown windows between two consolidations C        5     10    20
-CaGA threshold epsilon is fixed at 0.05 (--epsilon to change it). Everything else stays at the settings of Setup/hparams.py (learning rate of the log, LoRA rank 16, alpha 32, 10 Adam steps per window) and the code defaults.
-The trigger is the normal plateau trigger, so tau and the cooldown act together exactly as in the main runs.
-Results go to runs/grid/results as <log>__<tag>__seed<seed>.json. Finished runs are skipped.
-Choose the best combination per log with  python -m Analysis.select_grid
-"""
 import argparse
 import itertools
 import os

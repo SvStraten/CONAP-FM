@@ -5,10 +5,6 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --partition=mcs.default.q
-# Step 1. Preprocesses every log once and caches it in Preprocessed/ (parallel jobs would write the cache at the
-# same time otherwise). The raw logs must be in Data/ (see Data/README.md).
-# usage, from the repo root
-#   sbatch slurm/00_preprocess.sh
 
 mkdir -p OutputLogs runs checkpoints
 cd "$SLURM_SUBMIT_DIR"

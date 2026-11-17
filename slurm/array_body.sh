@@ -1,6 +1,5 @@
 #!/bin/bash
-# Sourced by the array scripts. Array task t runs dataset t modulo N and seed t divided by N.
-# Finished runs are skipped, so a failed or timed out array can simply be submitted again.
+
 source slurm/env.sh
 DS_ARR=($DATASETS); SEED_ARR=($SEEDS)
 ND=${#DS_ARR[@]}

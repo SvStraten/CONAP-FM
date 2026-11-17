@@ -1,21 +1,3 @@
-"""Grid over window size, tau and cooldown (epsilon fixed at 0.05, plain orthogonal CaGA rule) on the evaluation stream, one run (one seed) per cell.
-
-  python grid_full.py --dry-run | wc -l                      27 commands (1 log x 27 cells)
-  python grid_full.py --datasets IRO5000 --window 50      one slice
-
-Parameters and values (27 cells per log)
-  window   window size W in events                     50     100    500
-  tau      variance threshold of the plateau trigger    5e-4   5e-3   5e-2
-  epsilon  CaGA threshold on rho, fixed                 0.05 (--epsilon changes it for the whole grid)
-  cooldown windows between two consolidations C         5      10     20
-Log  IRO5000 (other logs with --datasets).
-The stream is the 85% evaluation stream of the main table (--data-split evaluation, --data-split full takes the whole log), the seed is 40.
-Everything else follows Table 1 and Setup/hparams.py: the learning rate eta of the log and 10 Adam steps per window.
-LoRA rank and alpha are those of Table 1 (Setup/hparams.py), BPIC2015_Recurrent 256/512, RequestForPayment 128/256, DomesticDeclarations 256/512.
---lora-16-32 uses rank 16 and alpha 32 instead.
-Results go to runs/grid_full/results as <log>__<tag>__seed<seed>.json with tags like f_w50_tau0.0005_c5. Finished runs are skipped.
-Because the grid uses the evaluation data too, it is a sensitivity analysis. Do not pick the final setting of the paper from it without saying so.
-"""
 import argparse
 import itertools
 import os

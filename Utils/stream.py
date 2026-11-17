@@ -1,10 +1,3 @@
-"""Stream helpers used by CONAP-FM.
-
-Evaluation protocol for every method
-  * the log is cut into the first 15% of the cases (validation, used only for tuning) and the rest (evaluation)
-  * the evaluated stream is the evaluation part in its original event order
-  * every window, including a short last one, is first tested and then used for training
-"""
 import random
 
 import numpy as np
@@ -20,7 +13,6 @@ def set_seed(seed):
 
 
 def _first(x):
-    """test_inputs may be a dict of tasks, a list of tasks or an array. Return the concatenated array."""
     if isinstance(x, dict):
         return np.concatenate([np.asarray(x[k]) for k in sorted(x.keys())])
     if isinstance(x, list) and len(x) > 0 and isinstance(x[0], (list, np.ndarray)):
@@ -33,8 +25,6 @@ def infer_n_classes(sampler):
 
 
 def apply_split(sampler, split):
-    """Cut the sampler in place. Returns the boolean mask over the full event stream that was kept.
-    validation = first 15% of the cases, evaluation = the remaining 85%, full = everything."""
     case_ids = sampler.case_ids
     _, idx = np.unique(case_ids, return_index=True)
     cases = case_ids[np.sort(idx)]
@@ -61,7 +51,6 @@ def apply_split(sampler, split):
 
 
 def flatten(sampler):
-    """Return the stream as arrays X (N x L_max, activity ids, most recent first, zero padded) and y (N)."""
     X = _first(sampler.test_inputs)
     y = _first(sampler.test_labels)
     if X.ndim == 1:
@@ -70,8 +59,6 @@ def flatten(sampler):
 
 
 def to_eval_coordinates(indices, mask):
-    """Translate event indices of the FULL log into indices of the evaluated stream.
-    Indices that fall into the removed validation part are dropped."""
     kept = np.flatnonzero(mask)
     out = []
     for d in indices:
@@ -82,7 +69,6 @@ def to_eval_coordinates(indices, mask):
 
 
 def load_stream(dataset, split="evaluation", max_events=0):
-    """Preprocess (cached) and cut a log. Returns data_name, sampler, X, y, mask."""
     from Utils.preprocess import preprocess
     data_name, sampler = preprocess(dataset)
     mask = apply_split(sampler, split)
@@ -92,7 +78,6 @@ def load_stream(dataset, split="evaluation", max_events=0):
 
 
 def truncate(sampler, n):
-    """Keep only the first n events of the evaluated stream (for quick tests)."""
     if not n or n <= 0:
         return
     ti, tl = sampler.test_inputs, sampler.test_labels

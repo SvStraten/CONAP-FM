@@ -6,10 +6,7 @@
 #SBATCH --mem=64G
 #SBATCH --gpus=1
 #SBATCH --partition=mcs.gpu.q
-# Step 2a. Offline pretraining of the LoRA adapters, one checkpoint per pair TARGET=SOURCE in PAIRS (edit slurm/env.sh).
-# The LoRA rank and alpha of the target log are used, because the adapters must have the same shape online.
-# Checkpoints go to checkpoints/<TARGET>_from_<SOURCE>/ (checkpoints/distilgpt2/... with BACKBONE=distilgpt2) (offline_lora.pt and offline_subspace.pt).
-#   sbatch slurm/02_pretrain.sh
+
 cd "$SLURM_SUBMIT_DIR"
 source slurm/env.sh
 for pair in $PAIRS; do
