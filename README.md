@@ -1,7 +1,5 @@
 # CONAP-FM
 
-**Sustainable Online Continual Learning for Foundation Process Prediction Models**
-
 Code for the ICPM paper *Towards Foundation Process Prediction Models: Sustainable Online Continual Learning*.
 
 CONAP-FM keeps a pretrained language model frozen and adapts it online to a stream of process events for next activity prediction.
